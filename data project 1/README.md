@@ -1,7 +1,8 @@
 ## Data Project 1 - DS2002
 - **Source 1 -->** Kaggle dataset of Top 100 Streamed Spotify Songs.
-    - link --> "https://www.kaggle.com/code/ludovicocuoghi/spotify-top-100-streamed-songs-analysis/input".
+    - "https://www.kaggle.com/code/ludovicocuoghi/spotify-top-100-streamed-songs-analysis/input".
 - **Source 2 -->** MuiscBrainz for API queries for each artist.
+    - https://musicbrainz.org/doc/MusicBrainz_API
 
 ### Overall
 - Uses Pandas to read in a .csv file and create a dataframe.
