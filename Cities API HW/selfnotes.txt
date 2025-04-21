@@ -1,0 +1,6 @@
+jwkl2uva
+34.48.125.135
+
+SSH in --> gcloud compute ssh --zone "us-east4-a" "lab-ds2002-vm" --project "ds2002-lab"
+    then go into venv --> activate venv --> source flaskenv/bin/activate
+file copy into SSH --> gcloud compute scp app.py "lab-ds2002-vm":~ --zone "us-east4-a" --project "ds2002-lab"
