@@ -14,7 +14,7 @@
 <div class="chat-container" id="chat-container">
     {% for entry in history %}
         <div class="bubble user">You: {{ entry.user }}</div>
-        <div class="bubble bot">Bot: {{ entry.bot }}</div>
+        <div class="bubble bot">Bot: {{ entry['gemini (you)'] }}</div>
     {% endfor %}
 </div>
 

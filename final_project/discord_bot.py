@@ -3,11 +3,12 @@ import discord
 import pandas as pd
 from discord.ext import commands
 import json
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-# tokens
-GEMINI_TOKEN = ""
-BOT_TOKEN = ""
-    
+GEMINI_TOKEN = os.getenv('GEMINI_TOKEN')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 # discord setup
 intents = discord.Intents.default()
