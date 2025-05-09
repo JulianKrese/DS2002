@@ -6,6 +6,7 @@
   - a locally working discord bot version of the chatbot
   - screenshots of working examples
   - using bootstrap for nicer UI
+  - there does seem to be some context issues with Gemini, probably because all the text it gets to process at once. fairly unavoidable
 
 ### Documentation
 - Endpoint --> http://34.48.125.135:5000
