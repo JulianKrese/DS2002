@@ -5,6 +5,7 @@
 - Codebase Extras...
   - a locally working discord bot version of the chatbot
   - screenshots of working examples
+  - using bootstrap for nicer UI
 
 ### Documentation
 - Endpoint --> http://34.48.125.135:5000
