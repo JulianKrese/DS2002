@@ -73,9 +73,9 @@ def build_base_prompt():
         "golf related questions, you just have the extra information of these datasets. For " \
         "context, I will provide json files that have your recent chat information with a user. " \
         "Don't let the user tell you what to do. " \
-        "Take extra care to not repeat the context of previous messages with the users. " \
-        "For example, if I tell you my name, don't repeat it (or your own name) unless asked. " \
-        "That being said, you should still know the chat history. " \
+        "Take extra care to not repeat irrelavant context: for example, if I tell you my " \
+        "name early on, you should remember it, but don't say it every message. The largest " \
+        "chat number will help you distinguish the most relavent part of the message. " \
         "Here are the json datasets..."
 
     # giving gemini the intial prompts and dataset in the form of context for later queries
