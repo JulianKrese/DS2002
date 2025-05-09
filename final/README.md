@@ -7,6 +7,8 @@
   - screenshots of working examples
   - using bootstrap for nicer UI
   - there does seem to be some context issues with Gemini, probably because all the text it gets to process at once. fairly unavoidable
+  - Discord...
+    - "discord_bot.py" must be running locally and have the bot imported. Screenshots shown to verify the code (as running locally is a pain)
 
 ### Documentation
 - Endpoint --> http://34.48.125.135:5000
