@@ -1,11 +1,10 @@
 import requests
 import discord
-import pandas as pd
 from discord.ext import commands
-import json
 from dotenv import load_dotenv
 import os
 
+# for keeping tokens hidden but processible
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 
@@ -15,10 +14,9 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents, case_insensitive=True)
 
 
-# gemini API requests to answer user questions
+# Flask API requests to answer user questions
 async def send_flask_chat(question):
 
-    # gemini API calld
     url = f"http://34.48.125.135:5000/chat"  # GCP flask API endpoint
     headers = {
         "Content-Type": "application/json"
@@ -28,7 +26,7 @@ async def send_flask_chat(question):
     }
 
     try:
-        # get gemini's response to the query
+        # process Flask's response
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
         result = response.json()
@@ -65,16 +63,11 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(message):
-    # global message_num, user_messages, bot_messages
     if message.author == bot.user:
         return
     
     modified_message = "Here is the author of a query and the question: " + str(message.author) + " : " + message.content
     gemini_response = await send_flask_chat(modified_message)
-
-    # message_num += 1
-    # user_messages[message_num] = message
-    # bot_messages[message_num] = gemini_response
 
     await send_long_message(message.channel, gemini_response)
             

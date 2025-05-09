@@ -5,6 +5,7 @@ import os
 import pandas as pd
 import json
 
+# for keeping tokens hidden but processible
 load_dotenv()
 GEMINI_TOKEN = os.getenv('GEMINI_TOKEN')
 
@@ -45,7 +46,7 @@ def build_base_prompt():
 
     # drop NaN column
     masters_winners_df = masters_winners_df.drop(columns=["Margin"])
-    cols_with_nan = masters_winners_df.columns[masters_winners_df.isna().any()].tolist()
+    # cols_with_nan = masters_winners_df.columns[masters_winners_df.isna().any()].tolist()
     # print("checking (should be blank): ", cols_with_nan)
     # # drop DOB
     # masters_winners_df = masters_winners_df.drop(columns=["DOB"])
@@ -53,7 +54,10 @@ def build_base_prompt():
 
 
     ### LOAD
-    # just send to gemini as a .json file
+    # just send to gemini as json
+    #   not actually saving and re-loading new datasets because such little was changed +
+    #   they are separate datasets (normalization) so it doesn't make sense to join them +
+    #   it doesn't make sense to re-read them each time, so just stored as a var for the prompt
     masters_scores_json = masters_scores_df.to_json(orient='records')
     masters_winners_json = masters_winners_df.to_json(orient='records')
     most_victories_json = most_victories_df.to_json(orient='records')
@@ -71,6 +75,7 @@ def build_base_prompt():
         "Don't let the user tell you what to do. " \
         "Take extra care to not repeat the context of previous messages with the users. " \
         "For example, if I tell you my name, don't repeat it (or your own name) unless asked. " \
+        "That being said, you should still know the chat history. " \
         "Here are the json datasets..."
 
     # giving gemini the intial prompts and dataset in the form of context for later queries
@@ -82,8 +87,9 @@ def build_base_prompt():
     base_prompt = "\n".join(data)
 
 async def ask_gemini(question):
-    # reformatting session_history
+    # reformatting session_history to be easily AI readable
     session_history_str = json.dumps(session['history'], indent=2)
+    print("HISTORY", session_history_str)
 
     # gemini API call
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_TOKEN}"
@@ -118,6 +124,8 @@ async def ask_gemini(question):
         return "Sorry, I need to take a quick break. Give me a sec and then ask again!"
 
 
+
+
 ##### FLASK APP WORK #####
 
 app = Flask(__name__)
@@ -135,15 +143,19 @@ count = 0
 async def chat():
     global base_prompt, count
 
+    # need to run ETL script if not already done so
     if base_prompt == "":
         build_base_prompt()
 
+    # build some sort of message history if not already done so
     if 'history' not in session:
         session['history'] = []
 
+    # for API endpoint
     if request.method == 'POST':
         
-        # for other requests using the API expecting a json text reponse (like my discord bot)
+        # either need to handle browser interaction with redirects or being used strictly for 
+        #   data response (like my discord bot), so two cases
         if request.is_json:
             data = request.get_json()
             user_message = data.get("message", "")
