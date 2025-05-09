@@ -89,7 +89,6 @@ def build_base_prompt():
 async def ask_gemini(question):
     # reformatting session_history to be easily AI readable
     session_history_str = json.dumps(session['history'], indent=2)
-    print("HISTORY", session_history_str)
 
     # gemini API call
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_TOKEN}"
