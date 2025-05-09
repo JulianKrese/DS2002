@@ -1,4 +1,10 @@
 ### Overall
+- Using Google Cloud Platform to publicly host a reachable chatbot
+  - accessible with a UI browser-based frontend or as an API request for backends
+- Utilizes flask with Gemini integration
+- Codebase Extras...
+  - a locally working discord bot version of the chatbot
+  - screenshots of working examples
 
 ### Documentation
 - Endpoint --> http://34.48.125.135:5000
@@ -6,8 +12,9 @@
   - To reach the chatbot, go down the /chat route
 - Supports post requests via the chat route
   - http://34.48.125.135:5000/chat
-  - Requires...
+  - Requests Requirements...
     - headers --> "Content-Type": "application/json"
-    - data --> "message": <your question>
-  - Managing the response...
-    - 
+    - data --> "message": question
+  - Managing the Response...
+    - in the form of ... {"reply": bot_reply}
+    - so get the result as json with ... result["reply"]
